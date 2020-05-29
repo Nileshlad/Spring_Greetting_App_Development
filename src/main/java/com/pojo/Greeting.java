@@ -1,4 +1,4 @@
-package com.poju;
+package com.pojo;
 
 public class Greeting {
     private final long incrementAndGet;
