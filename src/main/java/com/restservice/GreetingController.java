@@ -25,4 +25,9 @@ public class GreetingController {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 
+    @PostMapping("/post")
+    public Greeting greetingWithRequestBodyUserName(@RequestBody UserDTO user) {
+        String template = "Hello, %s %s!";
+        return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
+    }
 }
