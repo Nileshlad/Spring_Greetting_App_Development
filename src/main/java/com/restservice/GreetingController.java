@@ -1,5 +1,6 @@
-package com.springgreettingappdevelopment;
+package com.restservice;
 
+import com.poju.Greeting;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;

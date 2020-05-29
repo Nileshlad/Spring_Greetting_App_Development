@@ -1,4 +1,4 @@
-package com.springgreettingappdevelopment;
+package com.poju;
 
 public class Greeting {
     private final long incrementAndGet;
