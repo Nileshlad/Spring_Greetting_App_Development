@@ -1,6 +1,7 @@
 package com.restservice;
 
 import com.pojo.Greeting;
+import com.pojo.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -26,7 +27,7 @@ public class GreetingController {
     }
 
     @PostMapping("/post")
-    public Greeting greetingWithRequestBodyUserName(@RequestBody UserDTO user) {
+    public Greeting greetingWithRequestBodyUserName(@RequestBody User user) {
         String template = "Hello, %s %s!";
         return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
     }
