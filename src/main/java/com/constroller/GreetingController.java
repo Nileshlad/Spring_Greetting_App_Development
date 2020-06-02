@@ -6,6 +6,7 @@ import com.restservice.GreetingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -45,5 +46,10 @@ public class GreetingController {
     @PostMapping("/getGreeting")
     public User register(@RequestBody User user) {
         return GreetingService.greet(user);
+    }
+
+    @RequestMapping("/getGreetingById/{userId}")
+    public Optional<User> findGreeting(@PathVariable Long userId) {
+        return greetingService.findGreetingById(userId);
     }
 }
