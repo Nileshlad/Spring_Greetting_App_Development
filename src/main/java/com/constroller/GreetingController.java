@@ -1,7 +1,8 @@
-package com.restservice;
+package com.constroller;
 
 import com.pojo.Greeting;
 import com.pojo.User;
+import com.restservice.GreetingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class GreetingController {
     @Autowired
-    private GreetingServiceImpl service;
+    private GreetingServiceImpl GreetingService;
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
@@ -30,10 +31,10 @@ public class GreetingController {
     }
 
     @PostMapping("/post")
-    public Greeting greetingWithRequestBodyUserName(@RequestBody User user) {
-        String template = "Hello, %s %s!";
-        return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
-    }
+        public Greeting greetingWithRequestBodyUserName(@RequestBody UserDTO user) {
+            String template = "Hello, %s %s!";
+            return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
+        }
 
     @PutMapping("/put/{firstName}")
     public Greeting greetingPathVariableAndRequestParam(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
@@ -41,8 +42,8 @@ public class GreetingController {
         return new Greeting(counter.incrementAndGet(), String.format(template, firstName, lastName));
     }
 
-    @RequestMapping(value = {"/getGreeting"}, method = RequestMethod.GET)
-    public String getGreeting(@RequestParam(value = "firstName", required = false) String firstName,@RequestParam(value = "lastName", required = false) String lastName) {
-        return service.greet(firstName,lastName);
+    @PostMapping("/getGreeting")
+    public UserDTO register(@RequestBody UserDTO userDTO) {
+        return GreetingService.greet(userDTO);
     }
 }
