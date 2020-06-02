@@ -4,6 +4,8 @@ import com.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GreetingServiceImpl implements IGreetingService {
 
@@ -25,5 +27,9 @@ public class GreetingServiceImpl implements IGreetingService {
         userRepository.save(regUser);
         user.setId(regUser.getId());
         return user;
+    }
+    @Override
+    public Optional<User> findGreetingById(Long id) {
+        return userRepository.findById(id);
     }
     }
