@@ -2,12 +2,15 @@ package com.restservice;
 
 import com.pojo.Greeting;
 import com.pojo.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class GreetingController {
+    @Autowired
+    private GreetingServiceImpl service;
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
@@ -36,5 +39,10 @@ public class GreetingController {
     public Greeting greetingPathVariableAndRequestParam(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
         String template = "Hello, %s %s!";
         return new Greeting(counter.incrementAndGet(), String.format(template, firstName, lastName));
+    }
+
+    @RequestMapping(value = {"/getGreeting"}, method = RequestMethod.GET)
+    public String getGreeting(@RequestParam(defaultValue = "World") String name) {
+        return service.greet(name);
     }
 }
