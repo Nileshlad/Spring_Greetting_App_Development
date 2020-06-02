@@ -6,6 +6,7 @@ import com.restservice.GreetingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -32,10 +33,10 @@ public class GreetingController {
     }
 
     @PostMapping("/post")
-        public Greeting greetingWithRequestBodyUserName(@RequestBody User user) {
-            String template = "Hello, %s %s!";
-            return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
-        }
+    public Greeting greetingWithRequestBodyUserName(@RequestBody User user) {
+        String template = "Hello, %s %s!";
+        return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
+    }
 
     @PutMapping("/put/{firstName}")
     public Greeting greetingPathVariableAndRequestParam(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
@@ -51,5 +52,11 @@ public class GreetingController {
     @RequestMapping("/getGreetingById/{userId}")
     public Optional<User> findGreeting(@PathVariable Long userId) {
         return greetingService.findGreetingById(userId);
+    }
+
+    @RequestMapping("/allGreetings")
+    public List<User> findCities() {
+        return (List<User>) greetingService.findAllGreeting();
+
     }
 }
