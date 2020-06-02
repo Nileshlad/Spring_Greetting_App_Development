@@ -4,6 +4,7 @@ import com.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,9 @@ public class GreetingServiceImpl implements IGreetingService {
     @Override
     public Optional<User> findGreetingById(Long id) {
         return userRepository.findById(id);
+    }
+    @Override
+    public List<User> findAllGreeting() {
+        return userRepository.findAll();
     }
     }
