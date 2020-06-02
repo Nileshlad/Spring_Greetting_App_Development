@@ -1,14 +1,27 @@
-package com.pojo;
+package com.model;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table
 public class User {
+
+    @Id
     private Long id;
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+    @Column
     private String userName;
+    @Column
     private String password;
+    @Column
     private String userGreeting;
 
-
+    @javax.persistence.Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
