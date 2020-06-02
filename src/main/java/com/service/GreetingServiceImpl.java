@@ -1,10 +1,11 @@
-package com.restservice;
+package com.service;
 
-import com.pojo.User;
+import com.dto.User;
+import com.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.Registration;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,9 @@ public class GreetingServiceImpl implements IGreetingService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private static final String template = "Hello world!";
 
@@ -30,14 +34,17 @@ public class GreetingServiceImpl implements IGreetingService {
         user.setId(regUser.getId());
         return user;
     }
+
     @Override
     public Optional<User> findGreetingById(Long id) {
         return userRepository.findById(id);
     }
+
     @Override
     public List<User> findAllGreeting() {
         return userRepository.findAll();
     }
+
     @Override
     public Optional<User> updateGreeting(Long userId) {
         User user = userRepository.findById(userId).get();
@@ -45,4 +52,11 @@ public class GreetingServiceImpl implements IGreetingService {
         userRepository.save(user);
         return userRepository.findById(userId);
     }
+
+    @Override
+    public List<User> deleteGreeting(Long userId) {
+        User user = userRepository.findById(userId).get();
+        userRepository.delete(user);
+        return userRepository.findAll();
     }
+}

@@ -1,8 +1,8 @@
 package com.constroller;
 
-import com.pojo.Greeting;
-import com.pojo.User;
-import com.restservice.GreetingServiceImpl;
+import com.dto.Greeting;
+import com.dto.User;
+import com.service.GreetingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +13,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class GreetingController {
     @Autowired
-    private GreetingServiceImpl GreetingService;
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    public GreetingServiceImpl GreetingService;
+    public static final String template = "Hello, %s!";
+    public final AtomicLong counter = new AtomicLong();
+
+    @Autowired
+    private GreetingController greetingService;
 
     @GetMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -51,11 +54,12 @@ public class GreetingController {
 
     @GetMapping("/getGreetingById/{userId}")
     public Optional<User> findGreeting(@PathVariable Long userId) {
-        return greetingService.findGreetingById(userId);
+        return greetingService.findAllGreeting(Long userId);
     }
 
     @GetMapping("/allGreetings")
     public List<User> findAllGreeting() {
+
         return (List<User>) greetingService.findAllGreeting();
 
     }
