@@ -31,7 +31,7 @@ public class GreetingController {
     }
 
     @PostMapping("/post")
-        public Greeting greetingWithRequestBodyUserName(@RequestBody UserDTO user) {
+        public Greeting greetingWithRequestBodyUserName(@RequestBody User user) {
             String template = "Hello, %s %s!";
             return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
         }
@@ -43,7 +43,7 @@ public class GreetingController {
     }
 
     @PostMapping("/getGreeting")
-    public UserDTO register(@RequestBody UserDTO userDTO) {
-        return GreetingService.greet(userDTO);
+    public User register(@RequestBody User user) {
+        return GreetingService.greet(user);
     }
 }
