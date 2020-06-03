@@ -1,7 +1,8 @@
 package com.constroller;
 
 import com.dto.Greeting;
-import com.dto.User;
+import com.dto.UserDTO;
+import com.model.User;
 import com.service.GreetingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +12,17 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
+@RequestMapping("/greeting")
 public class GreetingController {
-    @Autowired
-    public GreetingServiceImpl GreetingService;
-    public static final String template = "Hello, %s!";
-    public final AtomicLong counter = new AtomicLong();
 
     @Autowired
-    private GreetingController greetingService;
+    private GreetingServiceImpl greetingService;
 
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    private static final String template = "Hello, %s!";
+    private final AtomicLong counter = new AtomicLong();
+
+    @GetMapping("/greetings")
+    public Greeting greetingWithDefaultMessage(@RequestParam(defaultValue = "World") String name) {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 
@@ -36,7 +37,7 @@ public class GreetingController {
     }
 
     @PostMapping("/post")
-    public Greeting greetingWithRequestBodyUserName(@RequestBody User user) {
+    public Greeting greetingWithRequestBodyUserName(@RequestBody UserDTO user) {
         String template = "Hello, %s %s!";
         return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName(), user.getLastName()));
     }
@@ -48,18 +49,17 @@ public class GreetingController {
     }
 
     @PostMapping("/getGreeting")
-    public User register(@RequestBody User user) {
-        return GreetingService.greet(user);
+    public UserDTO register(@RequestBody UserDTO userDTO) {
+        return greetingService.greet(userDTO);
     }
 
     @GetMapping("/getGreetingById/{userId}")
     public Optional<User> findGreeting(@PathVariable Long userId) {
-        return greetingService.findAllGreeting(Long userId);
+        return greetingService.findGreetingById(userId);
     }
 
     @GetMapping("/allGreetings")
     public List<User> findAllGreeting() {
-
         return (List<User>) greetingService.findAllGreeting();
 
     }
